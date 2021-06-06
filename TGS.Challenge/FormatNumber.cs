@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace TGS.Challenge
 {
@@ -26,7 +27,32 @@ namespace TGS.Challenge
     {
         public string Format(int value)
         {
-            return string.Empty;
+            if (value < 1 || value > 1000000000)
+                throw new ArgumentOutOfRangeException();
+
+            var formattedString = value.ToString();
+
+            //nothing to format as number is too small
+            if (formattedString.Length < 4)
+                return formattedString;
+
+            var sb = new StringBuilder();
+
+            int appenderCount = 0;
+            for (int index = 1; index <= formattedString.Length; index++)
+            {
+                //only append every 3 iterations
+                if (appenderCount == 3)
+                {
+                    sb.Insert(0, ",");
+                    appenderCount = 0;
+                }
+
+                sb.Insert(0, formattedString[formattedString.Length - index]);
+                appenderCount++;
+            }
+
+            return sb.ToString();
         }
     }
 }
