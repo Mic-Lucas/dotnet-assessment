@@ -1,3 +1,5 @@
+using System;
+
 namespace TGS.Challenge
 {
   /*
@@ -19,7 +21,38 @@ namespace TGS.Challenge
     {
       public int Find(int[] numbers)
       {
-        return -99;
+            for (int index = 0; index < numbers.Length; index++)
+            {
+                //split and sum numbers left of index
+                var leftSum = Sum(SplitArray(numbers, 0, index + 1));
+
+                //split and sum numbers right of index
+                var rightSum = Sum(SplitArray(numbers, index, numbers.Length - index));
+
+                if (leftSum == rightSum)
+                    return index;
+            }
+
+            return -1;
       }
+
+        //function to split array based on start and end positions
+        public int[] SplitArray(int[] arr, int index, int length)
+        {
+            int[] result = new int[length];
+            Array.Copy(arr, index, result, 0, length);
+            return result;
+        }
+
+        //function to sum array
+        public int Sum(int[] arr)
+        {
+            int sum = 0;
+
+            for (int i = 0; i < arr.Length; i++)
+                sum += arr[i];
+
+            return sum;
+        }
     }
 }
