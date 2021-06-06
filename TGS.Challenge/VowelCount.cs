@@ -16,7 +16,22 @@ namespace TGS.Challenge
     {
         public int Count(string value)
         {
-            return -1;
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentException("value cannot be null or empty");
+
+            //set collection of vowels
+            char[] vowels = new char[5] { 'a', 'e', 'i', 'o', 'u' };
+
+            int vowelCount = -0;
+
+            //loop through characters in value to see if it exists in the vowel array
+            foreach (var character in value.ToLower())
+            {
+                if (Array.IndexOf(vowels, character) > -1)
+                    vowelCount++;
+            }
+
+            return vowelCount;
         }
     }
 }
